@@ -17,14 +17,6 @@ class GroupSerializer(serializers.ModelSerializer):
         model = Group
         fields = ('name',)
 
-# class ProfileSerializer(serializers.ModelSerializer):
-#     user = UserSerializer1(many=False, read_only=True)
-
-#     class Meta:
-#         model = Profile
-#         fields = ["id", "user", "fullname", "department", "semester",
-#                   "rollno", "phoneno", "gender", "registrationno", "profile_pic"]
-
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
@@ -81,10 +73,3 @@ class LoginSerializer(serializers.ModelSerializer):
             msg = "Please provide both username and password"
             return exceptions.ValidationError(msg)
         return data
-
-
-# class NoteSerializer(serializers.ModelSerializer):
-# 	# owner=serializers.PrimaryKeyRelatedField(many=False,)
-# 	class Meta:
-# 		model = Notes
-# 		fields = ['id', 'owner', 'subject', 'course_code', 'file', 'credit']
