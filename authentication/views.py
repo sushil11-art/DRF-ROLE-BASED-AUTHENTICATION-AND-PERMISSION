@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.reverse import reverse
+from django.core import serializers
 from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework import status
@@ -40,10 +41,16 @@ class LoginView(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
         # user=serializer.validated_data.get('user')
         user = serializer.validated_data['user']
-        # user=validatedData['user']
+        # print(user)
+        data = request.data
+        serializer = UserSerializer(user)
         token, _ = Token.objects.get_or_create(user=user)
+        data = {'user': serializer.data, 'token': token.key}
+        # user_json = serializers.serialize('json', user)
+
+        # user=validatedData['user']
         # token, _ = Token.objects.get_or_create(user=user)
-        return Response({'token': token.key, 'user': user}, status=status.HTTP_200_OK)
+        return Response(data, status=status.HTTP_200_OK)
 
 
 class UserList(generics.ListAPIView):
